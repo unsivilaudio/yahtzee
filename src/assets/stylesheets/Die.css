@@ -1,13 +1,55 @@
 /* Original Styles For Numbers, before icons added in */
 .Die {
-  font-size: 25px;
-  display: inline-block;
-  padding: 0.5em 0.8em;
-  font-family: monospace;
-  font-weight: bold;
-  background-color: black;
-  color: white;
-  margin-right: 1em;
+    background: white;
+    height: 4rem;
+    width: 4rem;
+    font-family: monospace;
+    margin: 0.7rem;
+    padding: 0.5rem 0.8rem;
+    border: none;
+    border-radius: 0.7rem;
+    box-shadow: 0 1px 3px 2px rgba(255, 255, 255, 0.2);
+    transition: all 0.3s ease;
+}
+
+.Disabled {
+    background: #777;
+}
+/* Original CSS Die styles https://codepen.io/chriscoyier/pen/qswhy */
+.Die.One .Dot {
+    box-shadow: 0 0.2rem 0 #fff;
+}
+.Die.Two .Dot {
+    background: transparent;
+    box-shadow: -2rem -2rem 0 #345, 2rem 2rem 0 #345;
+}
+.Die.Three .Dot {
+    box-shadow: -2rem -2rem 0 #345, 2rem 2rem 0 #345;
+}
+.Die.Four .Dot {
+    background: transparent;
+    box-shadow: -2rem -2rem 0 #345, 2rem 2rem 0 #345, -2rem 2rem 0 #345,
+        2rem -2rem 0 #345;
+}
+.Die.Five .Dot {
+    box-shadow: -2rem -2rem 0 #345, 2rem 2rem 0 #345, -2rem 2rem 0 #345,
+        2rem -2rem 0 #345;
+}
+.Die.Six .Dot {
+    background: transparent;
+    box-shadow: -2rem -2rem 0 #345, -2rem 0 0 #345, -2rem 2rem 0 #345,
+        2rem -2rem 0 #345, 2rem 0 0 #345, 2rem 2rem 0 #345;
+}
+
+.Dot {
+    width: 1.2rem;
+    height: 1.2rem;
+    margin: 10%;
+    background: #345;
+    border-radius: 50%;
+    display: block;
+    position: relative;
+    transform: scale(0.5) translate(50%, 0);
 }
 
 /* THE NICER STYLES MADE FOR THE FONT-AWESOME ICONS... */

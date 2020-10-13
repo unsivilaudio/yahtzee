@@ -1,5 +1,8 @@
 .Dice {
-  margin: 1em;
-  display: flex;
-  justify-content: space-between;
+    width: 100%;
+    margin-bottom: 1.2rem;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
 }
