@@ -11,6 +11,7 @@ class Game extends Component {
         dice: Array.from({ length: NUM_DICE }),
         locked: Array(NUM_DICE).fill(false),
         rollsLeft: NUM_ROLLS,
+        disabledRules: [],
         scores: {
             ones: undefined,
             twos: undefined,
@@ -66,18 +67,22 @@ class Game extends Component {
     };
 
     doScore = (rulename, ruleFn) => {
-        const roundScore = ruleFn(this.state.dice);
-        // evaluate this ruleFn with the dice and score this rulename
-        this.setState(prevState => ({
-            scores: {
-                ...prevState.scores,
-                [rulename]: roundScore,
-            },
-            rollsLeft: NUM_ROLLS,
-            locked: Array(NUM_DICE).fill(false),
-            totalScore: prevState.totalScore + roundScore,
-        }));
-        this.roll();
+        const usedRules = [...this.state.disabledRules];
+        if (!usedRules.includes(rulename)) {
+            const roundScore = ruleFn(this.state.dice);
+            usedRules.push(rulename);
+            this.setState(prevState => ({
+                scores: {
+                    ...prevState.scores,
+                    [rulename]: roundScore,
+                },
+                rollsLeft: NUM_ROLLS,
+                locked: Array(NUM_DICE).fill(false),
+                totalScore: prevState.totalScore + roundScore,
+                disabledRules: usedRules,
+            }));
+            this.roll();
+        }
     };
 
     render() {
@@ -106,6 +111,7 @@ class Game extends Component {
                     <ScoreTable
                         doScore={this.doScore}
                         scores={this.state.scores}
+                        disabledRules={this.state.disabledRules}
                     />
                     <div className='Score'>
                         <h1 className='Content'>
