@@ -26,13 +26,25 @@ class Game extends Component {
             yahtzee: undefined,
             chance: undefined,
         },
+        totalScore: 0,
+    };
+
+    componentDidMount() {
+        const dice = Array(NUM_DICE)
+            .fill(0)
+            .map(_ => this.randomRoll());
+        this.setState(prevState => ({ ...prevState, dice }));
+    }
+
+    randomRoll = () => {
+        return Math.ceil(Math.random() * 6);
     };
 
     roll = e => {
         // roll dice whose indexes are in reroll
         this.setState(prevState => ({
             dice: prevState.dice.map((d, i) =>
-                prevState.locked[i] ? d : Math.ceil(Math.random() * 6)
+                prevState.locked[i] ? d : this.randomRoll()
             ),
             locked:
                 prevState.rollsLeft > 1
@@ -42,26 +54,28 @@ class Game extends Component {
         }));
     };
 
-    toggleLocked = idx => {
+    toggleLocked = id => {
         // toggle whether idx is in locked or not
         this.setState(prevState => ({
             locked: [
-                ...prevState.locked.slice(0, idx),
-                !prevState.locked[idx],
-                ...prevState.locked.slice(idx + 1),
+                ...prevState.locked.slice(0, id),
+                !prevState.locked[id],
+                ...prevState.locked.slice(id + 1),
             ],
         }));
     };
 
     doScore = (rulename, ruleFn) => {
+        const roundScore = ruleFn(this.state.dice);
         // evaluate this ruleFn with the dice and score this rulename
         this.setState(prevState => ({
             scores: {
                 ...prevState.scores,
-                [rulename]: ruleFn(this.state.dice),
+                [rulename]: roundScore,
             },
             rollsLeft: NUM_ROLLS,
             locked: Array(NUM_DICE).fill(false),
+            totalScore: prevState.totalScore + roundScore,
         }));
         this.roll();
     };
@@ -88,7 +102,17 @@ class Game extends Component {
                         </div>
                     </section>
                 </header>
-                <ScoreTable doScore={this.doScore} scores={this.state.scores} />
+                <main className='Game-Main'>
+                    <ScoreTable
+                        doScore={this.doScore}
+                        scores={this.state.scores}
+                    />
+                    <div className='Score'>
+                        <h1 className='Content'>
+                            Total Score: <span>{this.state.totalScore}</span>
+                        </h1>
+                    </div>
+                </main>
             </div>
         );
     }

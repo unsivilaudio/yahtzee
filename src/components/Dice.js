@@ -5,13 +5,12 @@ import '../assets/stylesheets/Dice.css';
 const dice = props => {
     return (
         <div className='Dice'>
-            {props.dice.map((d, idx) => (
+            {props.dice.map((d, i) => (
                 <Die
-                    handleClick={props.handleClick}
+                    key={i}
                     val={d}
-                    locked={props.locked[idx]}
-                    idx={idx}
-                    key={idx}
+                    locked={props.locked[i]}
+                    handleClick={() => props.handleClick(i)}
                 />
             ))}
         </div>
