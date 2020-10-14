@@ -50,7 +50,6 @@ class TotalOneNumber extends Rule {
 
 class SumDistro extends Rule {
     evalRoll = dice => {
-        // do any of the counts meet of exceed this distro?
         return this.freq(dice).some(c => c >= this.count) ? this.sum(dice) : 0;
     };
 }
@@ -59,7 +58,19 @@ class SumDistro extends Rule {
 
 class FullHouse extends Rule {
     evalRoll = dice => {
-        return this.freq(dice).length === 2 ? this.score : 0;
+        const house = dice.reduce((acc, val) => {
+            if (!acc[val]) {
+                acc[val] = 1;
+                return acc;
+            }
+            acc[val] = acc[val] + 1;
+            return acc;
+        }, {});
+        const values = Object.values(house);
+        values.sort();
+        return values.length === 2 && values[0] === 2 && values[1] === 3
+            ? this.score
+            : 0;
     };
 }
 

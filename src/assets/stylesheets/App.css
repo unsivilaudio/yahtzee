@@ -7,11 +7,18 @@
 }
 
 .App-title {
-    display: inline-block;
     color: white;
-    font-size: 5rem;
+    text-shadow: 2px 3px 5px #333;
+    font-size: 8rem;
     font-weight: 100;
-    width: 50%;
+    margin: 0 auto;
     margin-top: 1rem;
-    margin-bottom: 0;
+}
+
+@media screen and (max-width: 480px) {
+    .App-title {
+        margin-top: 0;
+        font-size: 6rem;
+        line-height: 1.6;
+    }
 }

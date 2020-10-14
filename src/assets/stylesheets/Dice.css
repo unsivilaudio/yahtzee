@@ -1,8 +1,15 @@
 .Dice {
     width: 100%;
-    margin-bottom: 1.2rem;
+    margin: 0 auto;
+    margin-bottom: 2rem;
     display: flex;
     flex-wrap: wrap;
     justify-content: center;
     align-items: center;
+}
+
+@media screen and (max-width: 480px) {
+    .Dice {
+        margin-bottom: 1rem;
+    }
 }

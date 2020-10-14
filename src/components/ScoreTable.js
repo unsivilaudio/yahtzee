@@ -73,8 +73,9 @@ const scoreTable = props => {
                         <RuleRow
                             name='Three of Kind'
                             score={
-                                scores.threeOfKind ||
-                                'Sum of dice if 3 are the same'
+                                scores.threeOfKind === undefined
+                                    ? 'Sum of dice if 3 are the same'
+                                    : scores.threeOfKind
                             }
                             doScore={evt =>
                                 doScore('threeOfKind', threeOfKind.evalRoll)
@@ -86,8 +87,9 @@ const scoreTable = props => {
                         <RuleRow
                             name='Four of Kind'
                             score={
-                                scores.fourOfKind ||
-                                'Sum of dice if 4 are the same'
+                                scores.fourOfKind === undefined
+                                    ? 'Sum of dice if 4 are the same'
+                                    : scores.fourOfKind
                             }
                             doScore={evt =>
                                 doScore('fourOfKind', fourOfKind.evalRoll)
@@ -99,7 +101,9 @@ const scoreTable = props => {
                         <RuleRow
                             name='Full House'
                             score={
-                                scores.fullHouse || '25 points for a full house'
+                                scores.fullHouse === undefined
+                                    ? '25 points for a full house'
+                                    : scores.fullHouse
                             }
                             doScore={evt =>
                                 doScore('fullHouse', fullHouse.evalRoll)
@@ -109,8 +113,9 @@ const scoreTable = props => {
                         <RuleRow
                             name='Small Straight'
                             score={
-                                scores.smallStraight ||
-                                '30 points for a small straight'
+                                scores.smallStraight === undefined
+                                    ? '30 points for a small straight'
+                                    : scores.smallStraight
                             }
                             doScore={evt =>
                                 doScore('smallStraight', smallStraight.evalRoll)
@@ -122,8 +127,9 @@ const scoreTable = props => {
                         <RuleRow
                             name='Large Straight'
                             score={
-                                scores.largeStraight ||
-                                '40 points for a large straight'
+                                scores.largeStraight === undefined
+                                    ? '40 points for a large straight'
+                                    : scores.largeStraight
                             }
                             doScore={evt =>
                                 doScore('largeStraight', largeStraight.evalRoll)
@@ -134,7 +140,11 @@ const scoreTable = props => {
                         />
                         <RuleRow
                             name='Yahtzee'
-                            score={scores.yahtzee || '50 points for a yahtzee'}
+                            score={
+                                scores.yahtzee === undefined
+                                    ? '50 points for a yahtzee'
+                                    : scores.yahtzee
+                            }
                             doScore={evt =>
                                 doScore('yahtzee', yahtzee.evalRoll)
                             }
@@ -142,7 +152,11 @@ const scoreTable = props => {
                         />
                         <RuleRow
                             name='Chance'
-                            score={scores.chance || 'Sum of all dice'}
+                            score={
+                                scores.chance === undefined
+                                    ? 'Sum of all dice'
+                                    : scores.chance
+                            }
                             doScore={evt => doScore('chance', chance.evalRoll)}
                             enabled={!props.disabledRules.includes('chance')}
                         />
