@@ -5,38 +5,42 @@ import '../assets/stylesheets/Game.css';
 
 const NUM_DICE = 5;
 const NUM_ROLLS = 3;
+const INITIAL_STATE = {
+    dice: Array.from({ length: NUM_DICE }),
+    locked: Array(NUM_DICE).fill(false),
+    rollsLeft: NUM_ROLLS,
+    rolling: false,
+    disabledRules: [],
+    scores: {
+        ones: undefined,
+        twos: undefined,
+        threes: undefined,
+        fours: undefined,
+        fives: undefined,
+        sixes: undefined,
+        threeOfKind: undefined,
+        fourOfKind: undefined,
+        fullHouse: undefined,
+        smallStraight: undefined,
+        largeStraight: undefined,
+        yahtzee: undefined,
+        chance: undefined,
+    },
+    totalScore: 0,
+    playing: true,
+};
 
 class Game extends Component {
-    state = {
-        dice: Array.from({ length: NUM_DICE }),
-        locked: Array(NUM_DICE).fill(false),
-        rollsLeft: NUM_ROLLS,
-        rolling: false,
-        disabledRules: [],
-        scores: {
-            ones: undefined,
-            twos: undefined,
-            threes: undefined,
-            fours: undefined,
-            fives: undefined,
-            sixes: undefined,
-            threeOfKind: undefined,
-            fourOfKind: undefined,
-            fullHouse: undefined,
-            smallStraight: undefined,
-            largeStraight: undefined,
-            yahtzee: undefined,
-            chance: undefined,
-        },
-        totalScore: 0,
-    };
+    state = { ...INITIAL_STATE };
 
     componentDidMount() {
-        const dice = Array(NUM_DICE)
-            .fill(0)
-            .map(_ => this.randomDie());
-        this.setState(prevState => ({ ...prevState, dice }));
+        this.diceSpin();
     }
+
+    handleResetGame = () => {
+        this.setState(INITIAL_STATE);
+        this.diceSpin();
+    };
 
     diceSpin = () => {
         this.setState({ rolling: true });
@@ -78,8 +82,10 @@ class Game extends Component {
     doScore = (rulename, ruleFn) => {
         const usedRules = [...this.state.disabledRules];
         if (!usedRules.includes(rulename)) {
-            const roundScore = ruleFn(this.state.dice);
             usedRules.push(rulename);
+            const roundScore = ruleFn(this.state.dice);
+            const playing =
+                usedRules.length < Object.keys(this.state.scores).length;
             this.setState(prevState => ({
                 scores: {
                     ...prevState.scores,
@@ -89,8 +95,11 @@ class Game extends Component {
                 locked: Array(NUM_DICE).fill(false),
                 totalScore: prevState.totalScore + roundScore,
                 disabledRules: usedRules,
+                playing,
             }));
-            this.diceSpin();
+            if (playing) {
+                this.diceSpin();
+            }
         }
     };
 
@@ -111,8 +120,16 @@ class Game extends Component {
                             <button
                                 className='Game-reroll'
                                 disabled={this.state.locked.every(x => x)}
-                                onClick={this.diceSpin}>
-                                {this.state.rolling
+                                onClick={
+                                    !this.state.playing
+                                        ? this.handleResetGame
+                                        : !this.state.rolling
+                                        ? this.diceSpin
+                                        : null
+                                }>
+                                {!this.state.playing
+                                    ? 'Play Again?'
+                                    : this.state.rolling
                                     ? 'Rolling...'
                                     : `${this.state.rollsLeft} Rolls Left`}
                             </button>
@@ -124,6 +141,7 @@ class Game extends Component {
                         doScore={this.doScore}
                         scores={this.state.scores}
                         disabledRules={this.state.disabledRules}
+                        rolling={this.state.rolling}
                     />
                     <div className='Score'>
                         <h1 className='Content'>

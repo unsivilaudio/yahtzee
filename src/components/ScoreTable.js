@@ -29,38 +29,86 @@ const scoreTable = props => {
                     <tbody>
                         <RuleRow
                             name='Ones'
-                            score={scores.ones || '1 point per 1'}
-                            doScore={evt => doScore('ones', ones.evalRoll)}
+                            score={
+                                scores.ones === undefined
+                                    ? '1 point per 1'
+                                    : scores.ones
+                            }
+                            doScore={evt =>
+                                props.rolling
+                                    ? null
+                                    : doScore('ones', ones.evalRoll)
+                            }
                             enabled={!props.disabledRules.includes('ones')}
                         />
                         <RuleRow
                             name='Twos'
-                            score={scores.twos || '2 points per 2'}
-                            doScore={evt => doScore('twos', twos.evalRoll)}
+                            score={
+                                scores.twos === undefined
+                                    ? '2 points per 2'
+                                    : scores.twos
+                            }
+                            doScore={evt =>
+                                props.rolling
+                                    ? null
+                                    : doScore('twos', twos.evalRoll)
+                            }
                             enabled={!props.disabledRules.includes('twos')}
                         />
                         <RuleRow
                             name='Threes'
-                            score={scores.threes || '3 points per 3'}
-                            doScore={evt => doScore('threes', threes.evalRoll)}
+                            score={
+                                scores.threes === undefined
+                                    ? '3 points per 3'
+                                    : scores.threes
+                            }
+                            doScore={evt =>
+                                props.rolling
+                                    ? null
+                                    : doScore('threes', threes.evalRoll)
+                            }
                             enabled={!props.disabledRules.includes('threes')}
                         />
                         <RuleRow
                             name='Fours'
-                            score={scores.fours || '4 points per 4'}
-                            doScore={evt => doScore('fours', fours.evalRoll)}
+                            score={
+                                scores.fours === undefined
+                                    ? '4 points per 4'
+                                    : scores.fours
+                            }
+                            doScore={evt =>
+                                props.rolling
+                                    ? null
+                                    : doScore('fours', fours.evalRoll)
+                            }
                             enabled={!props.disabledRules.includes('fours')}
                         />
                         <RuleRow
                             name='Fives'
-                            score={scores.fives || '5 points per 5'}
-                            doScore={evt => doScore('fives', fives.evalRoll)}
+                            score={
+                                scores.fives === undefined
+                                    ? '5 points per 5'
+                                    : scores.fives
+                            }
+                            doScore={evt =>
+                                props.rolling
+                                    ? null
+                                    : doScore('fives', fives.evalRoll)
+                            }
                             enabled={!props.disabledRules.includes('fives')}
                         />
                         <RuleRow
                             name='Sixes'
-                            score={scores.sixes || '6 points per 6'}
-                            doScore={evt => doScore('sixes', sixes.evalRoll)}
+                            score={
+                                scores.sixes === undefined
+                                    ? '6 points per 6'
+                                    : scores.sixes
+                            }
+                            doScore={evt =>
+                                props.rolling
+                                    ? null
+                                    : doScore('sixes', sixes.evalRoll)
+                            }
                             enabled={!props.disabledRules.includes('sixes')}
                         />
                     </tbody>
@@ -78,7 +126,12 @@ const scoreTable = props => {
                                     : scores.threeOfKind
                             }
                             doScore={evt =>
-                                doScore('threeOfKind', threeOfKind.evalRoll)
+                                props.rolling
+                                    ? null
+                                    : doScore(
+                                          'threeOfKind',
+                                          threeOfKind.evalRoll
+                                      )
                             }
                             enabled={
                                 !props.disabledRules.includes('threeOfKind')
@@ -92,7 +145,9 @@ const scoreTable = props => {
                                     : scores.fourOfKind
                             }
                             doScore={evt =>
-                                doScore('fourOfKind', fourOfKind.evalRoll)
+                                props.rolling
+                                    ? null
+                                    : doScore('fourOfKind', fourOfKind.evalRoll)
                             }
                             enabled={
                                 !props.disabledRules.includes('fourOfKind')
@@ -106,7 +161,9 @@ const scoreTable = props => {
                                     : scores.fullHouse
                             }
                             doScore={evt =>
-                                doScore('fullHouse', fullHouse.evalRoll)
+                                props.rolling
+                                    ? null
+                                    : doScore('fullHouse', fullHouse.evalRoll)
                             }
                             enabled={!props.disabledRules.includes('fullHouse')}
                         />
@@ -118,7 +175,12 @@ const scoreTable = props => {
                                     : scores.smallStraight
                             }
                             doScore={evt =>
-                                doScore('smallStraight', smallStraight.evalRoll)
+                                props.rolling
+                                    ? null
+                                    : doScore(
+                                          'smallStraight',
+                                          smallStraight.evalRoll
+                                      )
                             }
                             enabled={
                                 !props.disabledRules.includes('smallStraight')
@@ -132,7 +194,12 @@ const scoreTable = props => {
                                     : scores.largeStraight
                             }
                             doScore={evt =>
-                                doScore('largeStraight', largeStraight.evalRoll)
+                                props.rolling
+                                    ? null
+                                    : doScore(
+                                          'largeStraight',
+                                          largeStraight.evalRoll
+                                      )
                             }
                             enabled={
                                 !props.disabledRules.includes('largeStraight')
@@ -146,7 +213,9 @@ const scoreTable = props => {
                                     : scores.yahtzee
                             }
                             doScore={evt =>
-                                doScore('yahtzee', yahtzee.evalRoll)
+                                props.rolling
+                                    ? null
+                                    : doScore('yahtzee', yahtzee.evalRoll)
                             }
                             enabled={!props.disabledRules.includes('yahtzee')}
                         />
@@ -157,7 +226,11 @@ const scoreTable = props => {
                                     ? 'Sum of all dice'
                                     : scores.chance
                             }
-                            doScore={evt => doScore('chance', chance.evalRoll)}
+                            doScore={evt =>
+                                props.rolling
+                                    ? null
+                                    : doScore('chance', chance.evalRoll)
+                            }
                             enabled={!props.disabledRules.includes('chance')}
                         />
                     </tbody>
