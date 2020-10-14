@@ -1,13 +1,57 @@
 /* Original Styles For Numbers, before icons added in */
 .Die {
-  font-size: 25px;
-  display: inline-block;
-  padding: 0.5em 0.8em;
-  font-family: monospace;
-  font-weight: bold;
-  background-color: black;
-  color: white;
-  margin-right: 1em;
+    background: white;
+    height: 75px;
+    width: 75px;
+    font-family: monospace;
+    margin: 0.7rem;
+    padding: 0.5rem 0.8rem;
+    border: none;
+    border-radius: 0.7rem;
+    box-shadow: 2px 2px 3px rgba(0, 0, 0, 0.2);
+    transition: all 0.3s ease;
+}
+
+.Disabled {
+    background: #777;
+}
+
+/* Original CSS Die styles https://codepen.io/chriscoyier/pen/qswhy */
+
+.Dot {
+    width: 10px;
+    height: 10px;
+    margin: 0;
+    background: #345;
+    border-radius: 50%;
+    display: block;
+    position: relative;
+    transform: translate(25px, 0);
+}
+
+.Die.One .Dot {
+    box-shadow: none;
+}
+.Die.Two .Dot {
+    background: transparent;
+    box-shadow: -2rem -2rem 0 #345, 2rem 2rem 0 #345;
+}
+.Die.Three .Dot {
+    box-shadow: -2rem -2rem 0 #345, 2rem 2rem 0 #345;
+}
+.Die.Four .Dot {
+    background: transparent;
+    box-shadow: -2rem -2rem 0 #345, 2rem 2rem 0 #345, -2rem 2rem 0 #345,
+        2rem -2rem 0 #345;
+}
+.Die.Five .Dot {
+    box-shadow: -2rem -2rem 0 #345, 2rem 2rem 0 #345, -2rem 2rem 0 #345,
+        2rem -2rem 0 #345;
+}
+.Die.Six .Dot {
+    background: transparent;
+    box-shadow: -2rem -2rem 0 #345, -2rem 0 0 #345, -2rem 2rem 0 #345,
+        2rem -2rem 0 #345, 2rem 0 0 #345, 2rem 2rem 0 #345;
 }
 
 /* THE NICER STYLES MADE FOR THE FONT-AWESOME ICONS... */
@@ -16,31 +60,44 @@
   color: white;
   text-shadow: 0 19px 38px rgba(0, 0, 0, 0.3), 0 15px 12px rgba(0, 0, 0, 0.1);
   transition: all 0.3s ease;
-}
+} */
 
-.Die-locked {
+/* .Die-locked {
   opacity: 0.5;
   text-shadow: none;
-}
+} */
 
-.Die:not(.Die-locked):hover {
-  cursor: pointer;
-  opacity: 0.8;
+.Die:not(.Disabled):hover {
+    cursor: pointer;
+    opacity: 0.8;
 }
 .Die-rolling {
-  animation: spin 1s ease-out;
+    animation: spin 1s ease-out;
 }
 
 .Die-rolling:hover,
 .Die[disabled] {
-  cursor: not-allowed;
+    cursor: not-allowed;
 }
 
 @keyframes spin {
-  0% {
-    transform: rotate(0deg);
-  }
-  100% {
-    transform: rotate(360deg);
-  }
-} */
+    0% {
+        transform: rotate(0deg);
+    }
+    100% {
+        transform: rotate(360deg);
+    }
+}
+
+@media screen and (max-width: 600px) {
+    .Die {
+        height: 60px;
+        width: 60px;
+        margin: 1rem;
+        margin-top: 0;
+    }
+
+    .Dot {
+        transform: translate(17px, 0);
+    }
+}
