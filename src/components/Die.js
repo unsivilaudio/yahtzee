@@ -28,6 +28,7 @@ const die = props => {
     }
 
     if (props.locked) styles.push('Disabled');
+    if (props.rolling && !props.locked) styles.push('Die-rolling');
 
     return (
         <button className={styles.join(' ')} onClick={props.handleClick}>

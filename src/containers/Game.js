@@ -11,6 +11,7 @@ class Game extends Component {
         dice: Array.from({ length: NUM_DICE }),
         locked: Array(NUM_DICE).fill(false),
         rollsLeft: NUM_ROLLS,
+        rolling: false,
         disabledRules: [],
         scores: {
             ones: undefined,
@@ -33,11 +34,18 @@ class Game extends Component {
     componentDidMount() {
         const dice = Array(NUM_DICE)
             .fill(0)
-            .map(_ => this.randomRoll());
+            .map(_ => this.randomDie());
         this.setState(prevState => ({ ...prevState, dice }));
     }
 
-    randomRoll = () => {
+    diceSpin = () => {
+        this.setState({ rolling: true });
+        setTimeout(() => {
+            this.roll();
+        }, 1010);
+    };
+
+    randomDie = () => {
         return Math.ceil(Math.random() * 6);
     };
 
@@ -45,13 +53,14 @@ class Game extends Component {
         // roll dice whose indexes are in reroll
         this.setState(prevState => ({
             dice: prevState.dice.map((d, i) =>
-                prevState.locked[i] ? d : this.randomRoll()
+                prevState.locked[i] ? d : this.randomDie()
             ),
             locked:
                 prevState.rollsLeft > 1
                     ? prevState.locked
                     : Array(NUM_DICE).fill(true),
             rollsLeft: prevState.rollsLeft - 1,
+            rolling: false,
         }));
     };
 
@@ -81,7 +90,7 @@ class Game extends Component {
                 totalScore: prevState.totalScore + roundScore,
                 disabledRules: usedRules,
             }));
-            this.roll();
+            this.diceSpin();
         }
     };
 
@@ -95,13 +104,14 @@ class Game extends Component {
                         <Dice
                             dice={this.state.dice}
                             locked={this.state.locked}
+                            rolling={this.state.rolling}
                             handleClick={this.toggleLocked}
                         />
                         <div className='Game-button-wrapper'>
                             <button
                                 className='Game-reroll'
                                 disabled={this.state.locked.every(x => x)}
-                                onClick={this.roll}>
+                                onClick={this.diceSpin}>
                                 {this.state.rollsLeft} Rerolls Left
                             </button>
                         </div>

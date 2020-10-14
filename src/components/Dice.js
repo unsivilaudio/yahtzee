@@ -10,6 +10,7 @@ const dice = props => {
                     key={i}
                     val={d}
                     locked={props.locked[i]}
+                    rolling={props.rolling}
                     handleClick={() => props.handleClick(i)}
                 />
             ))}
